@@ -35,11 +35,13 @@ public class MyRouteBuilder extends RouteBuilder {
 
 		from("timer:data?period=5000").to("direct:simulator");
 
-		from("direct:sht21").to("exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21 S");
+		from("direct:sht21").to("exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21=args=S").to("direct:data");
 
 		from("direct:simulator")
 				.setBody()
-				.constant("21.4      43")
+				.constant("21.4      43").to("direct:data");
+
+		from("direct:data")
 				.process(new Processor() {
 
 					@Override
