@@ -1,0 +1,20 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+        <dataFormats>
+            <xstream id="xstream-utf8" encoding="UTF-8"/>
+            <xstream id="xstream-default"/>
+        </dataFormats>
+        <route>
+            <from uri="timer:test" />
+            <to uri="log:test" />
+        </route>
+        <route>
+            <from uri="timer:sht21"/>
+            <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+            <to uri="log:data"/>
+        </route>
+    </camelContext>
+
+</blueprint>
