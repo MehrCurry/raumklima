@@ -33,6 +33,8 @@ public class MyRouteBuilder extends RouteBuilder {
 		from("jetty:http://0.0.0.0:11145/klima/temperature").to(
 				"direct:sht21").setBody(xpath("klima/temperature/text()")).to("log:data");
 
+		from("jetty:http://0.0.0.0:11145/klima/xml").to("direct:sht21").to("log:data");
+
 		from("direct:sht21").to("exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S").to("direct:data");
 
 		from("direct:simulator")
