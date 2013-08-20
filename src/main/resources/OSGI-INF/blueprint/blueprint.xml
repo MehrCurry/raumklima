@@ -52,6 +52,7 @@
         <route>
             <from uri="direct:sht21"/>
             <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+	    <to uri="log:data"/>		
             <to uri="direct:data"/>
         </route>
         <!--
