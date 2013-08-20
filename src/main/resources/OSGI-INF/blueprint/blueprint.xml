@@ -9,6 +9,7 @@
             <xstream id="xstream-utf8" encoding="UTF-8"/>
             <xstream id="xstream-default"/>
             <xmljson id="xmljson"/>
+            <json id="json"/>
         </dataFormats>
         <route>
             <from uri="jetty:http://0.0.0.0:11145/klima/humidity"/>
@@ -29,10 +30,9 @@
             <to uri="log:data"/>
         </route>
         <route>
-            <from uri="jetty:http://0.0.0.0:11145/klima/xml"/>
+            <from uri="jetty:http://0.0.0.0:11145/klima/json"/>
             <to uri="direct:sht21"/>
-            <to uri="direct:toXML"/>
-            <unmarshal ref="xmljson"/>
+            <to uri="direct:toJSON"/>
             <to uri="log:data"/>
         </route>
         <route>
@@ -45,8 +45,7 @@
             <setBody>
                 <constant>21.4   59</constant>
             </setBody>
-            <to uri="direct:toXML"/>
-            <marshal ref="xmljson"/>
+            <to uri="direct:toJSON"/>
             <to uri="log:data"/>
             <to uri="mock:result"/>
         </route>
@@ -54,6 +53,12 @@
             <from uri="direct:toXML"/>
             <unmarshal ref="bindyDataformat"/>
             <marshal ref="xstream-utf8"/>
+            <to uri="log:data"/>
+        </route>
+        <route>
+            <from uri="direct:toJSON"/>
+            <unmarshal ref="bindyDataformat"/>
+            <marshal ref="json"/>
             <to uri="log:data"/>
         </route>
     </camelContext>
