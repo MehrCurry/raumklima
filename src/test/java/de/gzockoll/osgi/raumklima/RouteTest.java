@@ -21,7 +21,7 @@ public class RouteTest extends CamelBlueprintTestSupport {
     public void testRoute() throws Exception {
 
         // set mock expectations
-        getMockEndpoint("mock:a").expectedMinimumMessageCount(0);
+        getMockEndpoint("mock:result").expectedMinimumMessageCount(0);
 
         Thread.sleep(3000);
         // send a message

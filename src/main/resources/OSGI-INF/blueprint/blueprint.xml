@@ -38,6 +38,7 @@
         <route>
             <from uri="direct:sht21"/>
             <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+            <unmarshal ref="bindyDataformat"/>
 	        <to uri="log:data"/>
         </route>
         <route>
@@ -45,19 +46,18 @@
             <setBody>
                 <constant>21.4   59</constant>
             </setBody>
+            <unmarshal ref="bindyDataformat"/>
             <to uri="direct:toJSON"/>
             <to uri="log:data"/>
             <to uri="mock:result"/>
         </route>
         <route>
             <from uri="direct:toXML"/>
-            <unmarshal ref="bindyDataformat"/>
             <marshal ref="xstream-utf8"/>
             <to uri="log:data"/>
         </route>
         <route>
             <from uri="direct:toJSON"/>
-            <unmarshal ref="bindyDataformat"/>
             <marshal ref="json"/>
             <to uri="log:data"/>
         </route>

@@ -12,7 +12,7 @@ import org.apache.camel.dataformat.bindy.annotation.DataField
  * To change this template use File | Settings | File Templates.
  */
 @ToString
-@CsvRecord(separator = "\\s+")
+@CsvRecord(separator = '\\s+')
 class Sht21Data {
         @DataField(pos = 1, trim = true, precision = 1)
         BigDecimal temperature

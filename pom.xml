@@ -73,6 +73,12 @@
             <version>${camel.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-groovy</artifactId>
+            <version>${camel.version}</version>
+            <scope>provided</scope>
+        </dependency>
 		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -118,7 +124,13 @@
             <version>${camel.version}</version>
             <scope>test</scope>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -129,8 +141,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
             <plugin>
