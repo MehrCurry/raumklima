@@ -1,5 +1,6 @@
 package de.gzockoll.osgi.raumklima;
 
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
@@ -21,11 +22,11 @@ public class RouteTest extends CamelBlueprintTestSupport {
     public void testRoute() throws Exception {
 
         // set mock expectations
-        getMockEndpoint("mock:result").expectedMinimumMessageCount(0);
+        MockEndpoint endpoint = getMockEndpoint("mock:result");
+        endpoint.expectedMinimumMessageCount(1);
 
-        Thread.sleep(3000);
         // send a message
-        // template.sendBody("direct:start", "World");
+        template.sendBody("direct:simulator", "21.4 59");
 
         // assert mocks
         assertMockEndpointsSatisfied();
