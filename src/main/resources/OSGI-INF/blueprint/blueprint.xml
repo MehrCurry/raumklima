@@ -9,7 +9,7 @@
             <xstream id="xstream-utf8" encoding="UTF-8"/>
             <xstream id="xstream-default"/>
             <xmljson id="xmljson"/>
-            <json id="json"/>
+            <json id="json" library="Gson" />
         </dataFormats>
         <route>
             <from uri="jetty:http://0.0.0.0:11145/klima/humidity"/>
@@ -46,7 +46,7 @@
             <unmarshal ref="bindyDataformat"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
             <to uri="direct:toJSON"/>
-            <to uri="log:data"/>
+            <to uri="log:test?showAll=true&amp;multiline=true"/>
             <to uri="mock:result"/>
         </route>
         <route>
