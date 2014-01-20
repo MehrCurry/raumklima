@@ -4,7 +4,7 @@
         <argument value="de.gzockoll.osgi.raumklima.Sht21Data" />
     </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true">
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true" streamCache="true">
         <dataFormats>
             <xstream id="xstream-utf8" encoding="UTF-8"/>
             <xstream id="xstream-default"/>
@@ -12,56 +12,24 @@
             <json id="json" library="Gson" />
         </dataFormats>
         <route>
-            <from uri="jetty:http://0.0.0.0:11145/klima/humidity"/>
-            <to uri="direct:sht21"/>
-            <to uri="direct:toXML"/>
-            <setBody>
-                <xpath>klima/humidity/text()</xpath>
-            </setBody>
-            <to uri="log:data"/>
-        </route>
-        <route>
-            <from uri="jetty:http://0.0.0.0:11145/klima/temperature"/>
-            <to uri="direct:sht21"/>
-            <to uri="direct:toXML"/>
-            <setBody>
-                <xpath>klima/temperature/text()</xpath>
-            </setBody>
-            <to uri="log:data"/>
-        </route>
-        <route>
             <from uri="jetty:http://0.0.0.0:11145/klima/json"/>
-            <to uri="direct:sht21"/>
-            <to uri="direct:toJSON"/>
-            <to uri="log:data"/>
-        </route>
-        <route>
-            <from uri="direct:sht21"/>
             <to uri="seda:exec-sht21"/>
             <unmarshal ref="bindyDataformat"/>
-	        <to uri="log:data"/>
+            <marshal ref="json"/>
+            <to uri="log:data"/>
         </route>
         <route>
             <from uri="seda:exec-sht21"/>
             <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+            <to uri="log:test?showAll=true&amp;multiline=true"/>
         </route>
         <route>
             <from uri="direct:simulator"/>
             <unmarshal ref="bindyDataformat"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
-            <to uri="direct:toJSON"/>
+            <marshal ref="json"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
             <to uri="mock:result"/>
-        </route>
-        <route>
-            <from uri="direct:toXML"/>
-            <marshal ref="xstream-utf8"/>
-            <to uri="log:data"/>
-        </route>
-        <route>
-            <from uri="direct:toJSON"/>
-            <marshal ref="json"/>
-            <to uri="log:data"/>
         </route>
         <route>
             <from uri="timer://foo?fixedRate=true&amp;period=60000"/>
@@ -73,6 +41,7 @@
                 <simple>0 ${body}</simple>
             </setBody>
             <to uri="sftp:root@homematic-ccu2//var/tmp?privateKeyFile=/home/pi/.ssh/id_dsa"/>
+            <to uri="log:test?showAll=true&amp;multiline=true"/>
         </route>
     </camelContext>
 </blueprint>
