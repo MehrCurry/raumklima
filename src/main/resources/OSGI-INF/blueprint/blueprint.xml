@@ -4,7 +4,7 @@
         <argument value="de.gzockoll.osgi.raumklima.Sht21Data" />
     </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true" streamCache="true">
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true" streamCache="false">
         <dataFormats>
             <xstream id="xstream-utf8" encoding="UTF-8"/>
             <xstream id="xstream-default"/>
