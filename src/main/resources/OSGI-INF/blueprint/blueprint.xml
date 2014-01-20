@@ -37,9 +37,9 @@
                 <constant>sht21.txt</constant>
             </setHeader>
             <to uri="seda:exec-sht21"/>
-            <setBody>
-                <simple>0 ${body}</simple>
-            </setBody>
+            <transform>
+                <simple>0 ${in.body}</simple>
+            </transform>
             <to uri="sftp:root@homematic-ccu2//var/tmp?privateKeyFile=/home/pi/.ssh/id_dsa"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
         </route>
