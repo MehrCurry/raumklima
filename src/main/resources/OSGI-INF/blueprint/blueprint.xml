@@ -37,9 +37,13 @@
         </route>
         <route>
             <from uri="direct:sht21"/>
-            <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+            <to uri="seda:exec-sht21"/>
             <unmarshal ref="bindyDataformat"/>
 	        <to uri="log:data"/>
+        </route>
+        <route>
+            <from uri="seda:exec-sht21"/>
+            <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
         </route>
         <route>
             <from uri="direct:simulator"/>
@@ -61,14 +65,14 @@
         </route>
         <route>
             <from uri="timer://foo?fixedRate=true&amp;period=60000"/>
-            <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
+            <to uri="seda:exec-sht21"/>
             <setHeader headerName="CamelFileName">
                 <constant>sht21.txt</constant>
             </setHeader>
             <setBody>
                 <simple>0 ${body}</simple>
             </setBody>
-            <to uri="sftp:root@homematic-ccu2//usr/local/etc?privateKeyFile=/home/pi/.ssh/id_dsa"/>
+            <to uri="sftp:root@homematic-ccu2//var/tmp?privateKeyFile=/home/pi/.ssh/id_dsa"/>
         </route>
     </camelContext>
 </blueprint>
