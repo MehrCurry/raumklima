@@ -21,7 +21,6 @@
         <route>
             <from uri="seda:exec-sht21"/>
             <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
-            <to uri="log:test?showAll=true&amp;multiline=true"/>
         </route>
         <route>
             <from uri="direct:simulator"/>
@@ -36,6 +35,7 @@
             <setHeader headerName="CamelFileName">
                 <constant>sht21.txt</constant>
             </setHeader>
+            <setExchangePattern pattern="InOut"/>
             <to uri="seda:exec-sht21"/>
             <transform>
                 <simple>0 ${in.body}</simple>
