@@ -33,10 +33,10 @@
         </route>
         <route>
             <from uri="timer://foo?fixedRate=true&amp;period=60000"/>
-            <to uri="seda:exec-sht21"/>
             <setHeader headerName="CamelFileName">
                 <constant>sht21.txt</constant>
             </setHeader>
+            <to uri="seda:exec-sht21"/>
             <setBody>
                 <simple>0 ${body}</simple>
             </setBody>
