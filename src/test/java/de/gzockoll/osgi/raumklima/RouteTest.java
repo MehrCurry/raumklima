@@ -26,9 +26,9 @@ public class RouteTest extends CamelBlueprintTestSupport {
         endpoint.expectedMinimumMessageCount(1);
 
         // send a message
-        template.sendBody("direct:simulator",null);
+        template.sendBody("direct:start",null);
 
-        Thread.sleep(10000);
+        //Thread.sleep(10000);
         // assert mocks
         assertMockEndpointsSatisfied();
     }

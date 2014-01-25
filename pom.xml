@@ -15,7 +15,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<camel.version>2.11.1</camel.version>
+		<camel.version>2.12.2</camel.version>
 	</properties>
 
 	<dependencies>
@@ -82,6 +82,12 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-ftp</artifactId>
+            <version>${camel.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-weather</artifactId>
             <version>${camel.version}</version>
             <scope>provided</scope>
         </dependency>

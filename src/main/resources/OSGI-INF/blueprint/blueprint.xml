@@ -4,6 +4,8 @@
         <argument value="de.gzockoll.osgi.raumklima.Sht21Data" />
     </bean>
 
+    <bean id="aggregatorStrategy" class="de.gzockoll.osgi.raumklima.StringBodyAggregator"/>
+
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" trace="true" streamCache="false">
         <dataFormats>
             <xstream id="xstream-utf8" encoding="UTF-8"/>
@@ -23,7 +25,7 @@
             <to uri="exec:/home/pi/wrk/Raspi-SHT21-V3_0_0/sht21?args=S"/>
         </route>
         <route>
-            <from uri="direct:simulator"/>
+            <from uri="direct:simulator1"/>
             <unmarshal ref="bindyDataformat"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
             <marshal ref="json"/>
@@ -32,6 +34,25 @@
         </route>
         <route>
             <from uri="timer://foo?fixedRate=true&amp;period=60000"/>
+            <to uri="direct:start"/>
+        </route>
+        <route>
+            <from uri="direct:start"/>
+            <multicast strategyRef="aggregatorStrategy">
+                <to uri="direct:indoor"/>
+                <to uri="direct:weather"/>
+            </multicast>
+            <to uri="log:test?showAll=true&amp;multiline=true"/>
+            <to uri="direct:homematic"/>
+        </route>
+        <route>
+            <from uri="direct:weather"/>
+            <to uri="weather:foo?location=Henstedt-Ulzburg,Germany"/>
+            <unmarshal ref="xmljson"/>
+            <to uri="xslt:weather.xsl"/>
+        </route>
+        <route>
+            <from uri="direct:indoor"/>
             <setHeader headerName="CamelFileName">
                 <constant>sht21.txt</constant>
             </setHeader>
@@ -40,6 +61,9 @@
             <transform>
                 <simple>0 ${in.body}</simple>
             </transform>
+        </route>
+        <route>
+            <from uri="direct:homematic"/>
             <to uri="sftp:root@homematic-ccu2//var/tmp?privateKeyFile=/home/pi/.ssh/id_dsa"/>
             <to uri="log:test?showAll=true&amp;multiline=true"/>
         </route>
