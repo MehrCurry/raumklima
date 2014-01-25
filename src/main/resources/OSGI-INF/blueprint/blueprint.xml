@@ -35,8 +35,7 @@
             <to uri="seda:homematic"/>
         </route>
         <route>
-            <from uri="timer://foo2?fixedRate=true&amp;period=300000"/>
-            <to uri="weather:foo?location=Henstedt-Ulzburg,Germany&amp;mode=XML"/>
+            <from uri="weather:foo?location=Henstedt-Ulzburg,Germany&amp;mode=XML"/>
             <setHeader headerName="CamelFileName">
                 <constant>sht21.txt</constant>
             </setHeader>
