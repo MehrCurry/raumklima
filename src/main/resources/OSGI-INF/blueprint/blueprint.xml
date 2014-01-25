@@ -33,7 +33,7 @@
             <to uri="mock:result"/>
         </route>
         <route>
-            <from uri="timer://foo?fixedRate=true&amp;period=60000"/>
+            <from uri="timer://foo?fixedRate=true&amp;period=300000"/>
             <to uri="direct:start"/>
         </route>
         <route>
